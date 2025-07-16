@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TextField, MenuItem, Button, Stack } from "@mui/material";
 
-export default function TaskForm() {
+export default function TaskForm({ onSubmit }) {
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -15,6 +15,9 @@ export default function TaskForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (onSubmit) {
+      onSubmit(task);
+    }
     console.log("Task Submitted:", task);
     setTask({ title: "", description: "", status: "pending", priority: "low" });
   };
