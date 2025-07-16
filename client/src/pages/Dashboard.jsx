@@ -1,5 +1,5 @@
 import { Container, Typography, Grid, Box, Paper } from "@mui/material";
-
+import TaskForm from "../components/TaskForm";
 export default function Dashboard() {
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
@@ -10,6 +10,7 @@ export default function Dashboard() {
       {/*  Task Form */}
       <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
         <Typography variant="h6">Add New Task</Typography>
+        <TaskForm />
       </Paper>
 
       {/* Task List */}
