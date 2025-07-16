@@ -1,6 +1,16 @@
 import { Container, Typography, Grid, Box, Paper } from "@mui/material";
+import React, { useState } from "react";
 import TaskForm from "../components/TaskForm";
+import TaskCard from "../components/TaskCard";
 export default function Dashboard() {
+  const [tasks, setTasks] = useState([]);
+  const handleAddTask = (newTask) => {
+    const fakeId = Date.now(); // temporary ID
+    setTasks([...tasks, { ...newTask, id: fakeId }]);
+  };
+  const handleDeleteTask = (id) => {
+    setTasks(tasks.filter((t) => t.id !== id));
+  };
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
       <Typography variant="h4" gutterBottom>
@@ -10,17 +20,15 @@ export default function Dashboard() {
       {/*  Task Form */}
       <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
         <Typography variant="h6">Add New Task</Typography>
-        <TaskForm />
+        <TaskForm onSubmit={handleAddTask} />
       </Paper>
 
-      {/* Task List */}
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Box p={2} sx={{ border: "1px solid #ccc", borderRadius: 2 }}>
-            <Typography variant="subtitle1">Sample Task Title</Typography>
-            <Typography variant="body2">This is a placeholder task.</Typography>
-          </Box>
-        </Grid>
+        {tasks.map((task) => (
+          <Grid item xs={12} sm={6} md={4} key={task.id}>
+            <TaskCard task={task} onDelete={handleDeleteTask} />
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );
