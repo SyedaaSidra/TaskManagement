@@ -1,9 +1,19 @@
-import { Container, Typography, Grid, Box, Paper } from "@mui/material";
+import { Container, Typography, Grid, Box, Paper, Button } from "@mui/material";
 import React, { useState } from "react";
 import TaskForm from "../components/TaskForm";
 import TaskCard from "../components/TaskCard";
+import { logout } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   const handleAddTask = (newTask) => {
     const fakeId = Date.now(); // temporary ID
     setTasks([...tasks, { ...newTask, id: fakeId }]);
@@ -30,6 +40,9 @@ export default function Dashboard() {
           </Grid>
         ))}
       </Grid>
+      <Button variant="outlined" color="error" onClick={handleLogout}>
+        Logout
+      </Button>
     </Container>
   );
 }
